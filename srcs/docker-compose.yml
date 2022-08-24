@@ -1,6 +1,6 @@
-version: '3.9'
+version: '3.3'
 
-service:
+services:
 
   nginx:
     build: ./requirements/nginx
@@ -32,9 +32,14 @@ service:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
-#    volumes :
-#     - wpfiles:/var/www/html
     environment:
+      MARIADB_DATABASE: myDatabase
+      MARIADB_USER: example-user
+      MARIADB_PASSWORD: my_cool_secret
+      MARIADB_ROOT_PASSWORD: my-secret-pw
+    volumes:
+     - ./requirements/mariadb:/var/lib/mysql
+    
     networks:
       - wpnetwork
     restart: always
