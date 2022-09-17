@@ -12,7 +12,21 @@
 
 FROM debian:buster
 
-RUN apt-get update
-RUN apt-get install -y nginx
-RUN service nginx restart
-RUN ls /var/www/html
+RUN su
+RUN apt update && apt upgrade -y
+RUN apt install nginx sudo -y
+#COPY /home/apommier/42/inception/srcs/wordpresse/ var/www/html
+
+RUN ls var/www/
+#CMD ["echo","-----------new-----------"]
+#CMD ["ls","var/www/"]
+#CMD ["echo","-----------new-----------"]
+#CMD ["ls","var/www/html"]
+#CMD ["echo","-----------new-----------"]
+#CMD ["ls","var/www/html2"]
+#CMD ["echo","-----------new-----------"]
+#CMD ["ls","var/www/html3"]
+ENTRYPOINT ["nginx","-g","daemon off;"]
+#RUN cd var/www/html && ls && cat index.php
+#RUN ls var/www/
+#RUN sudo service nginx restart
