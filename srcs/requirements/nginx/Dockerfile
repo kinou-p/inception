@@ -10,23 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:buster
+FROM        debian:buster
 
-RUN su
-RUN apt update && apt upgrade -y
-RUN apt install nginx sudo -y
-#COPY /home/apommier/42/inception/srcs/wordpresse/ var/www/html
+RUN			apt update -y
+RUN         apt-get install -y nginx openssl
 
-RUN ls var/www/
-#CMD ["echo","-----------new-----------"]
-#CMD ["ls","var/www/"]
-#CMD ["echo","-----------new-----------"]
-#CMD ["ls","var/www/html"]
-#CMD ["echo","-----------new-----------"]
-#CMD ["ls","var/www/html2"]
-#CMD ["echo","-----------new-----------"]
-#CMD ["ls","var/www/html3"]
-ENTRYPOINT ["nginx","-g","daemon off;"]
-#RUN cd var/www/html && ls && cat index.php
-#RUN ls var/www/
-#RUN sudo service nginx restart
+RUN         mkdir -p /etc/ssl/private
+RUN         mkdir -p /etc/ssl/certs
+RUN         openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=FR/ST=17/L=StJeanDeLiversay/O=42/CN=apommier" 
+
+COPY		conf/nginx2.conf /etc/nginx/conf.d/default.conf
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

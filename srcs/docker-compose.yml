@@ -3,62 +3,60 @@ version: '3.3'
 services:
 
   nginx:
-    build: ./requirements/nginx
-    #image: nginx:stable-alpine
-    #container_name: nginx
+    build: requirements/nginx/
+    container_name: nginx
+    environment:
+      - DOMAIN_NAME=apommier.42.fr
+      - SSL_CERTIFICATE=/etc/ssl/certs/nginx-selfsigned.crt
+      - SSL_CERTIFICATE_KEY=/etc/ssl/private/nginx-selfsigned.key 
     depends_on:
-      - php
-      - mysql
+      - wordpress
     ports:
-      - 80:80
       - 443:443
+      - 80:80
     volumes:
-      #- wpfiles:/var/www/html
       - ./wordpress:/var/www/html
-      - ./wordpress:/var/www/html3
-      - ./wordpress:/var/www/html2
-      #- ./requirements/nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
     networks:
       - wpnetwork
-    restart: always
 
-  php:
-    #build: ./requirements/wordpress
-    image: php:7.4-fpm-alpine
+  wordpress:
+    build: ./requirements/wordpress
     volumes:
      # - wpfiles:/var/www/html
      - ./wordpress:/var/www/html
     depends_on:
-      - mysql
+      - mariadb
     networks:
       - wpnetwork
-    #restart: always
+    restart: unless-stopped
 
-  mysql:
-    #build: ./requirements/mariadb
-    image: mysql:latest
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    #image: mariadb:latest
     #container_name: mariadb
-    environment:
-      #MARIADB_DATABASE: wp
-      #MARIADB_USER: wp
-      #MARIADB_PASSWORD: secret
-      #MARIADB_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: wp
-      MYSQL_USER: wp
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+    #environment:
+     # MARIADB_DATABASE: wp
+     # MARIADB_USER: wp
+     # MARIADB_PASSWORD: secret
+     # MARIADB_ROOT_PASSWORD: secret
+      #mariadb_DATABASE: wp
+      #mariadb_USER: wp
+      #mariadb_PASSWORD: secret
+      #mariadb_ROOT_PASSWORD: secret
 
     volumes:
-      #- ./requirements/mariadb:/var/lib/mysql
+      #- ./requirements/mariadb:/var/lib/mariadb
       #- wpfiles:/var/www/html
       - ./wordpress:/var/www/html
     networks:
       - wpnetwork
-    #restart: always
+    restart: unless-stopped
 
 networks:
   wpnetwork:
     driver: bridge
 
-#volumes:
- # wpfiles:
+volumes:
+  wpfiles:

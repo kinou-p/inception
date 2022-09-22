@@ -11,7 +11,13 @@
 # **************************************************************************** #
 
 FROM debian:buster
+RUN apt-get update -y
+RUN apt-get install -y mariadb-client mariadb-common mariadb-server
+RUN sed -i 's/bind-address/bind-address = 0.0.0.0 #/i' /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN mkdir /mysql_scripts
+COPY ./tools/ /mysql_scripts/
+#COPY ./conf/server.conf /etc/mysql/mariadb.conf.d/
 
-RUN apt-get update
-RUN	apt-get -y install mariadb-server
-RUN	apt-get -y install mariadb-client
+RUN service mysql start && mysql < /mysql_scripts/mySqlScript.sql
+
+CMD ["mysqld"]

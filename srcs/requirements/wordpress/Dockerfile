@@ -13,24 +13,15 @@
 FROM debian:buster
 
 RUN apt-get update
-RUN	apt install -y php-fpm
-RUN	apt install -y wget
-RUN	apt install -y tar
+RUN apt-get -y install php7.3 php-mysqli php-fpm wget sendmail sudo
 
-WORKDIR /var/www/html
+EXPOSE 9000
 
-#RUN	wget https://wordpress.org/latest.tar.gz
-#RUN	tar -xzvf latest.tar.gz
-#RUN ls
-#RUN ls /var
-#RUN mkdir /var/www
-#RUN	mv ./wordpress /var/www/html
+#COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY ./tools /var/www/tools
 
-RUN apt install -y php-mysql
-RUN	apt install -y php-gd
-RUN	apt install -y php-mysqli
+RUN chmod +x /var/www/tools/start.sh
 
-#RUN service php restart
+ENTRYPOINT [ "/var/www/tools/start.sh" ]
 
-
-#RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
+CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
