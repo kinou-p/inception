@@ -22,8 +22,8 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    container_name: wordpress
     volumes:
-     # - wpfiles:/var/www/html
      - ./wordpress:/var/www/html
     depends_on:
       - mariadb
@@ -34,21 +34,7 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
-    #image: mariadb:latest
-    #container_name: mariadb
-    #environment:
-     # MARIADB_DATABASE: wp
-     # MARIADB_USER: wp
-     # MARIADB_PASSWORD: secret
-     # MARIADB_ROOT_PASSWORD: secret
-      #mariadb_DATABASE: wp
-      #mariadb_USER: wp
-      #mariadb_PASSWORD: secret
-      #mariadb_ROOT_PASSWORD: secret
-
     volumes:
-      #- ./requirements/mariadb:/var/lib/mariadb
-      #- wpfiles:/var/www/html
       - ./wordpress:/var/www/html
     networks:
       - wpnetwork
