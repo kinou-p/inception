@@ -16,7 +16,6 @@ RUN apt-get install -y mariadb-client mariadb-common mariadb-server
 RUN sed -i 's/bind-address/bind-address = 0.0.0.0 #/i' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN mkdir /mysql_scripts
 COPY ./tools/ /mysql_scripts/
-#COPY ./conf/server.conf /etc/mysql/mariadb.conf.d/
 
 RUN service mysql start && mysql < /mysql_scripts/mySqlScript.sql
 

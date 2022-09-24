@@ -13,7 +13,7 @@
 FROM debian:buster
 
 RUN apt-get update
-RUN apt-get -y install php7.3 php-mysqli php-fpm wget sendmail sudo
+RUN apt-get -y install php7.3 php-mysqli php-fpm wget
 
 EXPOSE 9000
 
