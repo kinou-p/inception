@@ -45,4 +45,4 @@ networks:
     driver: bridge
 
 volumes:
-  wpfiles:
+  wp_data:
