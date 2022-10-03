@@ -5,10 +5,6 @@ services:
   nginx:
     build: requirements/nginx/
     container_name: nginx
-    environment:
-      - DOMAIN_NAME=apommier.42.fr
-      - SSL_CERTIFICATE=/etc/ssl/certs/nginx-selfsigned.crt
-      - SSL_CERTIFICATE_KEY=/etc/ssl/private/nginx-selfsigned.key 
     depends_on:
       - wordpress
     ports:
@@ -23,6 +19,8 @@ services:
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
+    env_file:
+      - .env
     volumes:
      - ./wordpress:/var/www/html
     depends_on:
@@ -34,6 +32,10 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
+    environment:
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
       - ./wordpress:/var/www/html
     networks:

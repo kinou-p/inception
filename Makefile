@@ -14,7 +14,7 @@ all:
 	docker-compose -f ./srcs/docker-compose.yml up --build
 
 fclean: down
-	-rm -rf ./srcs/wordpress
+	-sudo rm -rf ./srcs/wordpress
 	-docker rm $$(docker ps -qa)
 	-docker rmi -f $$(docker images -qa)
 	-docker volume rm $$(docker volume ls -q)
@@ -28,6 +28,6 @@ back:
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
 
-re: clean
+re: fclean
 	docker-compose -f ./srcs/docker-compose.yml build --no-cache
 	docker-compose -f ./srcs/docker-compose.yml up
