@@ -17,6 +17,8 @@ RUN sed -i 's/bind-address/bind-address = 0.0.0.0 #/i' /etc/mysql/mariadb.conf.d
 RUN mkdir /mysql_scripts
 COPY ./tools/ /mysql_scripts/
 
-RUN service mysql start && mysql < /mysql_scripts/mySqlScript.sql
+RUN echo $MARIADB_DATABASE --dckerfi
+RUN sh mysql_scripts/sqlStart.sh
+#RUN service mysql start && mysql < /mysql_scripts/mySqlScript.sql
 
 CMD ["mysqld"]
