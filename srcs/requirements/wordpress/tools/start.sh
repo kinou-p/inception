@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    start.sh                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/08 11:59:05 by apommier          #+#    #+#              #
+#    Updated: 2022/10/08 11:59:06 by apommier         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/bash
 
 	sleep 5
@@ -17,7 +29,6 @@ then
 	wp core download --locale=fr_FR --allow-root;
     echo "Wordpress: configuration..."
 	wp config create --dbname=${MARIADB_DATABASE} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=${WORDPRESS_DB_HOST} --skip-check --allow-root
-	#mv /var/www/tools/wp-config.php /var/www/html/
 	echo "Wordpress: installation...";
     wp core install --url=${WP_URL} --title=${WP_TITLE} --admin_user=${WP_ADMIN_LOGIN} --admin_password=${WP_ADMIN_PASSWORD} --admin_email="${WP_ADMIN_EMAIL}" --skip-email --allow-root;
     echo "Wordpress: create user...";

@@ -1,6 +1,16 @@
-#!/bin/bash
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    sqlStart.sh                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/08 11:59:11 by apommier          #+#    #+#              #
+#    Updated: 2022/10/08 11:59:12 by apommier         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 service mysql start
-#service mysql start && mysql < /mysql_scripts/mySqlScript.sql
 
 mysql << EOF
 
@@ -10,10 +20,6 @@ GRANT ALL PRIVILEGES ON *.* TO '${MARIADB_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-#mysqld --datadir='/home/mariadb'
 service mysql stop
 mysqld
-#/etc/init.d/mysql stop
-
-#exec "$@"
 

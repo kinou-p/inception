@@ -20,14 +20,3 @@ COPY ./tools/ /mysql_scripts/
 EXPOSE 3306
 
 ENTRYPOINT ["bash", "mysql_scripts/sqlStart.sh"]
-#RUN service mysql start && mysql < /mysql_scripts/mySqlScript.sql
-
-
-
-#CMD ["service", "mysql", "start", "&&","mysqld"]
-#CMD ["mysqld"]
-#CMD ["mysqld", "--bind-address=0.0.0.0"]
-
-#CMD ["bash", "mysql_scripts/sqlStart.sh"]
-#ENTRYPOINT ["mysqld"]
-
