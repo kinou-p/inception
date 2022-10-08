@@ -1,15 +1,19 @@
-service mysql start 
+#!/bin/bash
+service mysql start
+#service mysql start && mysql < /mysql_scripts/mySqlScript.sql
 
-printenv
-echo Starting sql
-echo $MARIADB_DATABASE -- data
-echo $MARIADB_USER -- user
-cat << EOF > mysql
+mysql << EOF
 
-CREATE DATABASE IF NOT EXISTS $MARIADB_DATABASE;
-CREATE USER IF NOT EXISTS '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$MARIADB_USER'@'%';
+CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE};
+CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO '${MARIADB_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-exit
+#mysqld --datadir='/home/mariadb'
+service mysql stop
+mysqld
+#/etc/init.d/mysql stop
+
+#exec "$@"
+

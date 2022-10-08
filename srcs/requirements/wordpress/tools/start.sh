@@ -1,5 +1,6 @@
 #!/bin/bash
 
+	sleep 5
 	sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/" "/etc/php/7.3/fpm/pool.d/www.conf";
 	mkdir -p /run/php/;
 	touch /run/php/php7.3-fpm.pid;
@@ -15,7 +16,8 @@ then
     echo "Wordpress: downloading..."
 	wp core download --locale=fr_FR --allow-root;
     echo "Wordpress: configuration..."
-	mv /var/www/tools/wp-config.php /var/www/html/
+	wp config create --dbname=${MARIADB_DATABASE} --dbuser=${MARIADB_USER} --dbpass=${MARIADB_PASSWORD} --dbhost=${WORDPRESS_DB_HOST} --skip-check --allow-root
+	#mv /var/www/tools/wp-config.php /var/www/html/
 	echo "Wordpress: installation...";
     wp core install --url=${WP_URL} --title=${WP_TITLE} --admin_user=${WP_ADMIN_LOGIN} --admin_password=${WP_ADMIN_PASSWORD} --admin_email="${WP_ADMIN_EMAIL}" --skip-email --allow-root;
     echo "Wordpress: create user...";
