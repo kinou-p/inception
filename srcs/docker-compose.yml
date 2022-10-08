@@ -52,10 +52,10 @@ volumes:
       driver_opts:
         type: none
         o: 'bind'
-        device: '/home/apommier/wordpress'
+        device: '/home/apommier/data/wordpress'
     dbdata:
       driver: local
       driver_opts:
         type: none
         o: 'bind'
-        device: '/home/apommier/mariadb'
+        device: '/home/apommier/data/mariadb'

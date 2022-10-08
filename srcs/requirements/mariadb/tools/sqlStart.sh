@@ -1,14 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    sqlStart.sh                                        :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/08 11:59:11 by apommier          #+#    #+#              #
-#    Updated: 2022/10/08 11:59:12 by apommier         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#!/bin/bash
 
 service mysql start
 
@@ -17,6 +7,7 @@ mysql << EOF
 CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE};
 CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD}';
 GRANT ALL PRIVILEGES ON *.* TO '${MARIADB_USER}'@'%';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MARIADB_ROOT_PASSWORD');
 FLUSH PRIVILEGES;
 EOF
 
