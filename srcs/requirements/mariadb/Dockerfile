@@ -20,3 +20,4 @@ COPY ./tools/ /mysql_scripts/
 EXPOSE 3306
 WORKDIR /mysql_scripts
 ENTRYPOINT ["bash", "sqlStart.sh"]
+#ENTRYPOINT ["bash", "work.sh"]
