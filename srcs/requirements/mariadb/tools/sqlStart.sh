@@ -2,15 +2,12 @@
 
 service mysql start
 
-mysql << EOF
+if [ ! -d /var/lib/mysql/wordpress ]
+then
+echo "----sql config----"
+mysql < db.sh
+#mysql -u root < pwd.sh
 
-CREATE DATABASE IF NOT EXISTS ${MARIADB_DATABASE};
-CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD}';
-GRANT ALL PRIVILEGES ON *.* TO '${MARIADB_USER}'@'%';
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MARIADB_ROOT_PASSWORD');
-FLUSH PRIVILEGES;
-EOF
-
+fi
 service mysql stop
 mysqld
-
