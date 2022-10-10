@@ -14,10 +14,7 @@ FROM debian:buster
 RUN apt-get update -y
 RUN apt-get install -y mariadb-client mariadb-common mariadb-server
 RUN sed -i 's/bind-address/bind-address = 0.0.0.0 #/i' /etc/mysql/mariadb.conf.d/50-server.cnf
-
-RUN mkdir /mysql_scripts
-COPY ./tools/ /mysql_scripts/
 EXPOSE 3306
-WORKDIR /mysql_scripts
-ENTRYPOINT ["bash", "sqlStart.sh"]
-#ENTRYPOINT ["bash", "work.sh"]
+COPY ./tools/setup.sql /
+RUN service mysql start && mysql < setup.sql
+CMD ["/usr/bin/mysqld_safe"]
